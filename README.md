@@ -27,6 +27,62 @@
 - OpenAI Codex：需要安装 [Codex CLI](https://developers.openai.com/codex/cli/) 并完成 `codex login`
 - 阿里云百炼：需要安装阿里云 CLI 并完成 `aliyun configure`
 
+## 阿里云百炼配置
+
+阿里云百炼卡片显示的是阿里云账号的**可用现金余额**，数据来自费用与成本 `QueryAccountBalance` API，并不是百炼模型的 Token 配额。
+
+### 1. 安装阿里云 CLI
+
+推荐通过 Homebrew 安装：
+
+```bash
+brew install aliyun-cli
+aliyun version
+```
+
+也可以参考[阿里云 CLI 官方安装文档](https://help.aliyun.com/zh/cli/install-cli-on-macos)。应用会自动查找 `/opt/homebrew/bin/aliyun`、`/usr/local/bin/aliyun` 和 `~/.local/bin/aliyun`。
+
+### 2. 配置身份凭证
+
+本地使用推荐通过 OAuth 登录，无需把 AccessKey 写入 LLMUsageBar：
+
+```bash
+aliyun configure --mode OAuth --profile default
+```
+
+如果必须使用 RAM 用户 AccessKey，请使用交互式配置，避免密钥进入 Shell 历史：
+
+```bash
+aliyun configure --mode AK --profile default
+```
+
+建议遵循最小权限原则，只授予余额查询所需的 `bss:DescribeAcccount` 权限：
+
+```json
+{
+  "Version": "1",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": ["bss:DescribeAcccount"],
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+参考：[CLI 凭据配置](https://help.aliyun.com/zh/cli/configure-credentials/) · [QueryAccountBalance 授权信息](https://help.aliyun.com/zh/user-center/developer-reference/api-bssopenapi-2017-12-14-queryaccountbalance)
+
+### 3. 验证查询
+
+先在终端确认以下命令能够返回余额：
+
+```bash
+aliyun bssopenapi QueryAccountBalance --RegionId cn-hangzhou
+```
+
+然后在 LLMUsageBar 设置中启用“阿里云百炼”并保存刷新即可。应用不会读取 AccessKey，而是直接复用阿里云 CLI 保存的默认凭据。
+
 ## 从源码运行
 
 ```bash
