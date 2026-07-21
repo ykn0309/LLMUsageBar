@@ -6,7 +6,7 @@
   [![macOS 13+](https://img.shields.io/badge/macOS-13%2B-black)](https://www.apple.com/macos/)
   [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
   <br><br>
-  <img src="docs/images/usage-panel.png" width="420" alt="LLMUsageBar 菜单栏面板效果图">
+  <img src="docs/images/usage-panel.png" width="900" alt="LLMUsageBar macOS 桌面效果图">
 </div>
 
 ## 功能
