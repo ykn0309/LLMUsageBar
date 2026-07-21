@@ -1,0 +1,24 @@
+name: Bug report
+description: 报告可复现的问题
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: textarea
+    attributes:
+      label: 问题描述
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 复现步骤
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: macOS 与应用版本
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 补充信息
+      description: 请务必隐藏 API Key、Token、邮箱和账户信息。

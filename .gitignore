@@ -1,0 +1,8 @@
+.build/
+.swiftpm/
+.DS_Store
+*.zip
+.env
+.env.*
+xcuserdata/
+DerivedData/
