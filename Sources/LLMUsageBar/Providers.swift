@@ -305,7 +305,8 @@ struct UsageProvider {
         var details = [plan.map { "ChatGPT \($0)" } ?? "Codex 配额"]
         if (DynamicJSON.values(in: snapshot, path: "credits.hasCredits").first as? Bool) == true,
            let balance = DynamicJSON.firstString(in: snapshot, paths: ["credits.balance"]) {
-            details.append("Credits \(balance)")
+            let credits = Double(balance).map { String(Int($0.rounded())) } ?? balance
+            details.append("Credits \(credits)")
         }
         if let resetCount = DynamicJSON.numericValues(in: object, path: "rateLimitResetCredits.availableCount").first,
            resetCount > 0 {
